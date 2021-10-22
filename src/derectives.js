@@ -13,6 +13,12 @@ function getPokemonAbilities(abilities) {
   return newArr;
 }
 
+function getPokemonsOfType(object) {
+  const pokemons = object.pokemon;
+  const newArr = pokemons.map((pokemon) => pokemon.pokemon.name);
+  return newArr;
+}
+
 //Creating object of pokemon
 function generationPokemonObject(object) {
   const pokemonTypes = getPokemonTypes(object.types);
@@ -61,4 +67,5 @@ module.exports = {
   createPokemonFile,
   deletePokemonFile,
   listYoursPokemons,
+  getPokemonsOfType,
 };
