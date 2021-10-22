@@ -26,7 +26,7 @@ router.get('/query', (req, res) => {
 
 // Get request by id url params
 router.get('/get/:id', (req, res) => {
-  const { id } = req.params;
+  const id = req.params;
   P.getPokemonByName(id)
     .then((result) => {
       const pokemon = derectives.generationPokemonObject(result);
@@ -53,7 +53,7 @@ router.get('/', (req, res) => {
 
 //Put request of catching pokemon and creating file in DataBase
 router.put('/catch/:id', errorHandler.isPokemonCatched, (req, res) => {
-  const { id } = req.params;
+  const id = req.params;
   P.getPokemonByName(id)
     .then((result) => {
       const pokemon = derectives.generationPokemonObject(result);
@@ -70,13 +70,27 @@ router.put('/catch/:id', errorHandler.isPokemonCatched, (req, res) => {
 //Delete request of deleting caught pokemon and deleting file from DataBase
 router.delete('/release/:id', errorHandler.isPokemonCatched, (req, res) => {
   try {
-    const { id } = req.params;
+    const id = req.params;
     derectives.deletePokemonFile(id, req.headers.username);
     res.send('succed');
     res.end();
   } catch {
     throw Error;
   }
+});
+
+router.get('/type/:typename', (req, res) => {
+  const typename = req.params;
+  P.getTypeByName(typename)
+    .then((result) => {
+      res.send(result);
+      res.end();
+    })
+    .catch((error) => {
+      res.send(error);
+      res.end();
+      console.log('There was an ERROR: ', error);
+    });
 });
 
 module.exports = router;
